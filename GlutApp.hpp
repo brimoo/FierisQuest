@@ -1,8 +1,6 @@
 #ifndef GlutApp_hpp
 #define GlutApp_hpp
 
-#include <iostream>
-
 #if defined WIN32
 #include <freeglut.h>
 #elif defined __APPLE__
@@ -12,7 +10,6 @@
 #endif
 
 class GlutApp {
-private:
     // GLUT callbacks
     static void idleCB ();
     static void mouseCB (int b, int s, int x, int y);
@@ -77,4 +74,4 @@ private:
     virtual void mouseMove(float x, float y){}
 };
 
-#endif
+#endif // GlutApp_hpp
