@@ -7,7 +7,8 @@
 #include "Rect.h"
 
 using namespace std;
-
+//Flavortown = goal
+//Fieri = start
 
 class AStar{
 	//heuristic which separates A* from dijkstra
