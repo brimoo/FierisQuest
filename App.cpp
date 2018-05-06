@@ -1,5 +1,5 @@
-#include "App.h"
-#include "Rect.h"
+#include "App.hpp"
+#include "Rect.hpp"
 #include <vector>
 
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){

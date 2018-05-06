@@ -1,7 +1,7 @@
 #ifndef RECT_H
 #define RECT_H
 #include <iostream>
-#include "Vec.h"
+#include "Vec.hpp"
 
 class Rect{
 

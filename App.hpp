@@ -1,8 +1,8 @@
 #ifndef App_hpp
 #define App_hpp
 
-#include "GlutApp.h"
-#include "Rect.h"
+#include "GlutApp.hpp"
+#include "Rect.hpp"
 #include <vector>
 
 class App: public GlutApp {
