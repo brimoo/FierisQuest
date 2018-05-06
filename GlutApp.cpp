@@ -1,9 +1,10 @@
-#include "GlutApp.h"
+#include "GlutApp.hpp"
 
 // Make this static so that it will not be accessible in other source files
 static GlutApp* app;
 
-GlutApp::GlutApp(const char* label, int x, int y, int w, int h) {
+GlutApp::GlutApp(const char* label, int x, int y, int w, int h)
+{
     // Set app pointer to be the current object
     app = this;
     
@@ -32,18 +33,19 @@ GlutApp::GlutApp(const char* label, int x, int y, int w, int h) {
     glutPassiveMotionFunc(passiveCB);
 }
 
-void GlutApp::windowToScene ( float& x, float &y )
+void GlutApp::windowToScene(float& x, float& y)
 {
     // Converting window coordinates [0..width] x [0..height] to [-1..1] x [-1..1]
-    x = (2.0f*(x/float(width))) - 1.0f;
-    y = 1.0f - (2.0f*(y/float(height)));
-	// Take care of issue in Windows where y coordinate is a little off
-	#if defined WIN32
-	y -= 0.03;
-	#endif
+    x = (2.0f * (x/float(width)) ) - 1.0f;
+    y = 1.0f - ( 2.0f * (y/float(height)) );
+    // Take care of issue in Windows where y coordinate is a little off
+#if defined WIN32
+    y -= 0.03;
+#endif
 }
 
-void GlutApp::draw(){
+void GlutApp::draw()
+{
     // Default behavior for a display method
     
     // Clear the screen
@@ -62,7 +64,8 @@ void GlutApp::draw(){
     glutSwapBuffers();
 }
 
-void GlutApp::resize ( int w, int h ) {
+void GlutApp::resize(int w, int h)
+{
     // Update the width and height
     width = w;
     height = h;
@@ -72,70 +75,74 @@ void GlutApp::resize ( int w, int h ) {
 
 }
 
-void GlutApp::keyPress(unsigned char key){
+void GlutApp::keyPress(unsigned char key)
+{
     // Exit the application when any key is pressed
     exit(0);
 }
 
-void GlutApp::run() {
+void GlutApp::run()
+{
     // Run the main loop
     glutMainLoop();
 }
 
-void GlutApp::redraw() {
+void GlutApp::redraw()
+{
     // Redraw the display
     glutPostRedisplay();
 }
 
 
-void GlutApp::displayCB(){
+void GlutApp::displayCB()
+{
     // When GLUT needs to redraw itself, call our draw method
     app->draw();
 }
 
-void GlutApp::reshapeCB(int w, int h){
+void GlutApp::reshapeCB(int w, int h)
+{
     // When the window is resized, call our resize method
     app->resize(w, h);
 }
 
-void GlutApp::idleCB(){
+void GlutApp::idleCB()
+{
     // Call out idle method when application idles
     app->idle();
 }
 
 
-void GlutApp::mouseCB(int b, int s, int x, int y){
+void GlutApp::mouseCB(int b, int s, int x, int y)
+{
     // Convert mouse position to scene coordinates
     float mx = (float) x;
     float my = (float) y;
     app->windowToScene(mx, my);
     
     // Determine button and state and call appropriate handler
-    if (b == 0){
+    if (b == 0) {
         // Left click
-        if (s == 0){
+        if (s == 0)
             // Left down
             app->mouseDown(mx, my);
-        }
-        else {
+        else
             // Left up
             app->mouseUp(mx, my);
-        }
     }
     else {
         // Right click
-        if (s == 0){
+        if (s == 0)
             // Right down
             app->mouseRightDown(mx, my);
-        }
-        else {
+        else
             // Right up
             app->mouseRightUp(mx, my);
-        }
     }
 }
 
-void GlutApp::motionCB(int x, int y){
+void GlutApp::motionCB(int x, int y)
+{
     // Convert mouse position to scene coordinates
     float mx = (float) x;
     float my = (float) y;
@@ -145,7 +152,8 @@ void GlutApp::motionCB(int x, int y){
     app->mouseDrag(mx, my);
 }
 
-void GlutApp::passiveCB (int x, int y){
+void GlutApp::passiveCB(int x, int y)
+{
     // Convert mouse position to scene coordinates
     float mx = (float) x;
     float my = (float) y;
@@ -155,12 +163,14 @@ void GlutApp::passiveCB (int x, int y){
     app->mouseMove(mx, my);
 }
 
-void GlutApp::keyboardCB(unsigned char key, int x, int y){
+void GlutApp::keyboardCB(unsigned char key, int x, int y)
+{
     // When a key is pressed, call our keypress handler
     app->keyPress(key);
 }
 
-void GlutApp::specialCB(int key, int x, int y){
+void GlutApp::specialCB(int key, int x, int y)
+{
     // When a special key is pressed, call our handler for special keys
     app->specialKeyPress(key);
 }

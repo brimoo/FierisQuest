@@ -1,20 +1,22 @@
 #ifndef App_hpp
 #define App_hpp
 
-#include "GlutApp.h"
-#include "Rect.h"
+#include "GlutApp.hpp"
+#include "Rect.hpp"
 #include <vector>
 
-class App: public GlutApp {
+class App : public GlutApp {
     // Maintain app state here
     float mx;
     float my;
     std::vector<Rect*> next;
     std::vector<Rect*> prev;
-    public:
+
+public:
     // Constructor, to initialize state
     App(const char* label, int x, int y, int w, int h);
-
+    ~App();
+    
     // These are the events we want to handle
     void draw();
     void keyPress(unsigned char key);
@@ -22,5 +24,4 @@ class App: public GlutApp {
     void mouseDrag(float x, float y);
 };
 
-
-#endif
+#endif // App_hpp
