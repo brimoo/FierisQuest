@@ -1,4 +1,5 @@
 #include "Board.hpp"
+#include "SquareTypes.hpp"
 #include <stdexcept>
 #include <iostream>
 Board::Board(unsigned size)
@@ -35,4 +36,27 @@ void Board::draw()
     for (auto row :board)
         for (auto square : row)
             square->draw();
+}
+
+void Board::click(float x, float y)
+{
+    for (auto row : board)
+        for (auto square : row)
+            if (square->contains(x, y))
+                square->click();
+}
+
+void Board::drag(float x, float y)
+{
+    for (auto row : board)
+        for (auto square : row)
+            if (square->contains(x, y))
+                square->setType(new WallSquare);
+}
+
+void Board::reset()
+{
+    for (auto row : board)
+        for (auto square : row)
+            square->setType(new NormalSquare);
 }

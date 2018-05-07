@@ -34,6 +34,7 @@ void App::mouseDown(float x, float y)
     mx = x;
     my = y;
 
+    board->click(x, y);
     // Redraw the scene
     redraw();
 }
@@ -43,7 +44,8 @@ void App::mouseDrag(float x, float y)
     // Update app state
     mx = x;
     my = y;
-    
+
+    board->drag(x, y);
     // Redraw the scene
     redraw();
 }
@@ -53,5 +55,9 @@ void App::keyPress(unsigned char key)
     if (key == 27){
         // Exit the app when Esc key is pressed
         exit(0);
+    }
+    else if (key == ' ') {
+        board->reset();
+        redraw();
     }
 }

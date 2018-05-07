@@ -11,6 +11,9 @@ public:
     Board(unsigned);
     ~Board();
     void draw();
+    void click(float x, float y);
+    void drag(float x, float y);
+    void reset();
 };
 
 #endif // Board_hpp

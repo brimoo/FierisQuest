@@ -1,5 +1,6 @@
 #include "Square.hpp"
 
+#include <iostream>
 #if defined WIN32
 #include <freeglut.h>
 #elif defined __APPLE__
@@ -8,15 +9,17 @@
 #include <GL/freeglut.h>
 #endif
 
-Square::Square(float x, float y, float size,
-               float r, float g, float b)
+Square::Square(float x, float y, float size)
     : x(x)
     , y(y)
     , size(size)
-    , r(r)
-    , g(g)
-    , b(b)
+    , type(new NormalSquare)
 { }
+
+Square::~Square()
+{
+    delete type;
+}
 
 bool Square::contains(float x, float y)
 {
@@ -27,14 +30,22 @@ bool Square::contains(float x, float y)
 
 void Square::draw()
 {
-    glColor3f(r, g, b);
+    std::vector<float> color = type->color();
+    glColor3f(color[0], color[1], color[2]);
     glRectf(x-size/2, y+size/2,
             x+size/2, y-size/2);
 }
 
-void Square::setColor(float r, float g, float b)
+class SquareType;
+void Square::setType(SquareType* type)
 {
-    this->r = r;
-    this->g = g;
-    this->b = b;
+    this->type = type;
+}
+
+void Square::click()
+{
+    if (dynamic_cast<WallSquare*>(type))
+        setType(new NormalSquare);
+    else
+        setType(new WallSquare);
 }
