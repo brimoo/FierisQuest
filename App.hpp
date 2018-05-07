@@ -2,15 +2,15 @@
 #define App_hpp
 
 #include "GlutApp.hpp"
-#include "Rect.hpp"
+#include "Board.hpp"
 #include <vector>
 
 class App : public GlutApp {
     // Maintain app state here
     float mx;
     float my;
-    std::vector<Rect*> next;
-    std::vector<Rect*> prev;
+
+    Board* board;
 
 public:
     // Constructor, to initialize state

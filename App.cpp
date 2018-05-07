@@ -1,12 +1,19 @@
 #include "App.hpp"
-#include "Rect.hpp"
+#include "App.hpp"
+#include "Board.hpp"
 #include <vector>
 
 App::App(const char* label, int x, int y, int w, int h)
     : GlutApp(label, x, y, w, h)
     , mx(0)
     , my(0)
+    , board(new Board(20))
 { }
+
+App::~App()
+{
+    delete board;
+}
 
 void App::draw()
 {
@@ -14,6 +21,8 @@ void App::draw()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    board->draw();
     
     // Display
     glutSwapBuffers();

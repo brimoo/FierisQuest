@@ -12,7 +12,7 @@ PROGRAM = glutapp
 # OPTFLAGS = -g  # for debug
 OPTFLAGS = -g
 CC       = g++
-CFLAGS   = -Wall -Werror $(OPTFLAGS)
+CFLAGS   = -Wall -Werror --std=c++11 $(OPTFLAGS)
 
 ifeq ($(strip $(OS)),Darwin)
 	LDFLAGS = -framework GLUT -framework OpenGL
