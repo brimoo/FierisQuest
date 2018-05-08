@@ -48,6 +48,7 @@ void App::printIntro()
     std::cout << "+ \t Increase Simulation Speed" << std::endl;
     std::cout << "- \t Decrease Simulation Speed" << std::endl;
     std::cout << "p \t Pause Simulation" << std::endl;
+    std::cout << "s \t Step Through Algorithm (While Paused)" << std::endl;
     std::cout << "Space \t Reset Simulation" << std::endl;
     std::cout << "------------------------" << std::endl;
     std::cout << std::endl;
@@ -169,7 +170,14 @@ void App::keyPress(unsigned char key)
             std::cout << "Paused" << std::endl;
         }
         break;
-    }  
+        
+        // Step through while paused
+    case 's':
+        if (paused && algoRunner->isRunning()) {
+            std::cout << "Next Iteration..." << std::endl;
+            redraw();
+        }
+    }
 }
 
 bool App::isRunning()
