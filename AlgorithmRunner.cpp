@@ -25,8 +25,10 @@ void AlgorithmRunner::updateBoard()
 
     for (auto node : vertices) {
         SquareType* type;
-        
-        if (node.expanding)
+
+        if (!isRunning() && node.inPath)
+            type = new PathSquare;
+        else if (node.expanding)
             type = new ExpandingSquare;
         else if (node.traversed)
             type = new TraversedSquare;
@@ -46,12 +48,6 @@ int AlgorithmRunner::indexToID(int i, int j)
     return i + j*board->size();
 }
 
-bool AlgorithmRunner::isWallSquare(int i, int j)
-{
-//    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType());
-    return false;
-}
-
 std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
 {
     std::vector<int> neighbors;
@@ -61,38 +57,36 @@ std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
     // Left Side
     if (i != 0) {
         // Top left
-        if (j != 0 && !isWallSquare(i-1, j-1))
+        if (j != 0)
             neighbors.push_back( indexToID(j-1, i-1) );
 
         // Bottom left
-        if (j != board->size()-1 && !isWallSquare(i-1, j+1))
+        if (j != board->size()-1)
             neighbors.push_back( indexToID(j+1, i-1) );
 
         // Left
-        if (!isWallSquare(i-1, j))
         neighbors.push_back( indexToID(j, i-1) );
     }
 
     // Above
-    if (j != 0 && !isWallSquare(i, j-1))
+    if (j != 0)
         neighbors.push_back( indexToID(j-1, i) );
 
     // Below
-    if (j != board->size()-1 && !isWallSquare(i, j+1))
+    if (j != board->size()-1)
         neighbors.push_back( indexToID(j+1, i) );
 
     // Right Side
     if (i != board->size()-1 ) {
         // Top right
-        if (j != 0 && !isWallSquare(i+1, j-1))
+        if (j != 0)
             neighbors.push_back( indexToID(j-1, i+1) );
 
         // Bottom right
-        if (j != board->size()-1 && !isWallSquare(i+1, j+1))
+        if (j != board->size()-1)
             neighbors.push_back( indexToID(j+1, i+1) );
 
         // Right
-        if (!isWallSquare(i+1, j))
         neighbors.push_back( indexToID(j, i+1) );
     }
 
@@ -151,13 +145,10 @@ bool AlgorithmRunner::isRunning()
 void AlgorithmRunner::next()
 {
     if (algorithm && board->goalsChosen()) {
-
         if (isRunning()) {
             algorithm->next();
             updateBoard();
         }
-
-
     }
 }
 

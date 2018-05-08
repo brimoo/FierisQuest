@@ -50,4 +50,9 @@ struct EndSquare : public SquareType {
     std::vector<float> color() { return {1, 1, 0}; }
 };
 
+struct PathSquare : public SquareType {
+    // Purple
+    std::vector<float> color() { return {1, 0, 1}; }
+}
+
 #endif // SquareTypes_hpp
