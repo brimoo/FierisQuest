@@ -40,6 +40,11 @@ int AlgorithmRunner::indexToID(int i, int j)
     return i*board->size() + j;
 }
 
+bool isWallSquare(int i, int j)
+{
+    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType();
+}
+
 std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
 {
     std::vector<int> neighbors;
@@ -49,39 +54,41 @@ std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
     // Left Side
     if (i != 0) {
         // Top left
-        if (j != 0)
+        if (j != 0 && !isWallSquare(i-1, j-1))
             neighbors.push_back( indexToID(i-1, j-1) );
 
         // Bottom left
-        if (j != board->size() )
+        if (j != board->size() && !isWallSquare(i-1, j+1))
             neighbors.push_back( indexToID(i-1, j+1) );
 
         // Left
+        if (!isWallSquare(i-1, j))
         neighbors.push_back( indexToID(i-1, j) );
     }
 
     // Above
-    if (j != 0)
+    if (j != 0 && !isWallSquare(i, j-1))
         neighbors.push_back( indexToID(i, j-1) );
 
     // Below
-    if (j != board->size() )
+    if (j != board->size() && !isWallSquare(i, j+1))
         neighbors.push_back( indexToID(i, j+1) );
 
     // Right Side
     if (i != board->size() ) {
         // Top right
-        if (j != 0)
+        if (j != 0 && !isWallSquare(i+1, j-1))
             neighbors.push_back( indexToID(i+1, j-1) );
 
         // Bottom right
-        if (j != board->size() )
+        if (j != board->size() && !isWallSquare(i+1, j+1))
             neighbors.push_back( indexToID(i+1, j+1) );
 
         // Right
+        if (!isWallSquare(i+1, j))
         neighbors.push_back( indexToID(i+1, j) );
     }
-
+    
     return neighbors;
 }
 
