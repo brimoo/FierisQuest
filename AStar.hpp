@@ -37,7 +37,6 @@ protected:
     std::map<int, int> cost_so_far;
     std::map<int, int> came_from;
     std::queue<int> path_to_goal;
-    int start, goal;
 
 public:
     AStar(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g);
@@ -46,8 +45,6 @@ public:
 
 AStar::AStar(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g)
     : PathingAlgorithm(adjList, vecList, s, g)
-    , start(s)
-    , goal(g)
 {
     open.push(s, 0);
     came_from[s] = s;
@@ -67,7 +64,7 @@ void AStar::next()
         int curr = open.pop();
         vecList[curr].traverse();
 
-        if(curr == goal){
+        if(curr == endID){
             std::cout << "-----FOUND GOAL-----" << std::endl;
             running = false;
             pathFound = true;
@@ -79,7 +76,7 @@ void AStar::next()
             int new_cost = cost_so_far[curr] + vecList[neighbor].cost;
             if((cost_so_far.find(neighbor) == cost_so_far.end() || new_cost < cost_so_far[neighbor]) && vecList[neighbor].cost != INT_MAX){
                 cost_so_far[neighbor] = new_cost;
-                int priority = new_cost + heuristic(neighbor, goal);
+                int priority = new_cost + heuristic(neighbor, endID);
                 open.push(neighbor, priority);
                 vecList[neighbor].expand();
                 came_from[neighbor] = curr;
@@ -96,10 +93,9 @@ void AStar::next()
 
 void AStar::extractPath()
 {
-    int i = goal;
-    std::vector<int> path;
+    int i = endID;
 
-    while(i != start && pathFound){
+    while(i != startID && pathFound){
         vecList[i].inPath = true;
         i = came_from[i];
     }
