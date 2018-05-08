@@ -71,6 +71,7 @@ void AStar::next()
             std::cout << "-----FOUND GOAL-----" << std::endl;
             running = false;
             pathFound = true;
+            extractPath();
             return;
         }
 
@@ -99,8 +100,8 @@ void AStar::extractPath()
     std::vector<int> path;
 
     while(i != start && pathFound){
-        i = came_from[i];
         vecList[i].inPath = true;
+        i = came_from[i];
     }
 }
 
