@@ -10,6 +10,7 @@ App::App(const char* label, int x, int y, int w, int h)
     , my(0)
     , board(new Board(20))
     , algoRunner(new AlgorithmRunner(board))
+    , selected_algo("")
 { }
 
 App::~App()
@@ -58,7 +59,6 @@ void App::mouseDrag(float x, float y)
 
 void App::keyPress(unsigned char key)
 {
-    std::string algo = "";
     switch (key) {
     case 27: // ESC
         // Exit the app when Esc key is pressed
@@ -72,24 +72,24 @@ void App::keyPress(unsigned char key)
         break;
 
     case '1':
-        algo = "A*";
+        selected_algo = "A*";
         break;
 
     case '2':
-        algo = "Dijkstra";
+        selected_algo = "Dijkstra";
         break;
 
     case '3':
-        algo = "BFS";
+        selected_algo = "BFS";
         break;
 
     case '4':
-        algo = "DFS";
+        selected_algo = "DFS";
         break;
 
     case '\n':
-        if (algo != std::string(""))
-            algoRunner->setAlgorithm(algo);
+        if (selected_algo != std::string(""))
+            algoRunner->setAlgorithm(selected_algo);
         break;
     }  
 }

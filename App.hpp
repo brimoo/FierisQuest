@@ -13,8 +13,8 @@ class App : public GlutApp {
 
     Board* board;
     AlgorithmRunner* algoRunner;
-
-    bool algorithm_chosed;
+    std::string selected_algo;
+    
 public:
     // Constructor, to initialize state
     App(const char* label, int x, int y, int w, int h);
