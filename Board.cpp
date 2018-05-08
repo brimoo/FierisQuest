@@ -47,7 +47,7 @@ void Board::click(float x, float y)
                     square->setType(new StartSquare);
                     start_picked = true;
                 }
-                else if (!goal_picked) {
+                else if (!goal_picked && !dynamic_cast<StartSquare*>(square->getType())) {
                     square->setType(new EndSquare);
                     goal_picked = true;
                 }
@@ -64,7 +64,7 @@ void Board::drag(float x, float y)
     for (auto row : board)
         for (auto square : row)
             if (square->contains(x, y))
-                square->setType(new WallSquare);
+                square->drag();
 }
 
 void Board::reset()

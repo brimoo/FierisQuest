@@ -50,6 +50,12 @@ void Square::click()
         setType(new WallSquare);
 }
 
+void Square::drag()
+{
+    if (dynamic_cast<NormalSquare*>(type))
+        setType(new WallSquare);
+}
+
 SquareType* Square::getType()
 {
     return type;
