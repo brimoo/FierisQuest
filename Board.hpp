@@ -20,6 +20,7 @@ public:
     void setSquareType(int i, int j, SquareType* type);
     Square* getSquare(int i, int j);
     int size();
+    bool goalsChosen();
 };
 
 #endif // Board_hpp

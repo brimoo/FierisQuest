@@ -90,3 +90,8 @@ int Board::size()
 {
     return board.size();
 }
+
+bool Board::goalsChosen()
+{
+    return start_picked && goal_picked;
+}

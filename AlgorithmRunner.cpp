@@ -135,7 +135,7 @@ bool AlgorithmRunner::isRunning()
 
 void AlgorithmRunner::next()
 {
-    if (algorithm) {
+    if (algorithm && board->goalsChosen()) {
         algorithm->next();
         updateBoard();
     }

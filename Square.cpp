@@ -46,7 +46,7 @@ void Square::click()
 {
     if (dynamic_cast<WallSquare*>(type))
         setType(new NormalSquare);
-    else
+    else if (dynamic_cast<NormalSquare*>(type))
         setType(new WallSquare);
 }
 
