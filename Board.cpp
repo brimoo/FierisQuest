@@ -46,10 +46,12 @@ void Board::click(float x, float y)
                 if (!start_picked) {
                     square->setType(new StartSquare);
                     start_picked = true;
+                    std::cout << "Start Square Selected" << std::endl;
                 }
                 else if (!goal_picked && !dynamic_cast<StartSquare*>(square->getType())) {
                     square->setType(new EndSquare);
                     goal_picked = true;
+                    std::cout << "Goal Square Selected" << std::endl;
                 }
                 else {
                     square->click();

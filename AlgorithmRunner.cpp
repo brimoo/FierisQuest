@@ -26,7 +26,9 @@ void AlgorithmRunner::updateBoard()
 
     for (auto node : vertices) {
         SquareType* type;
- 
+
+        // Set the node's corresponding square to the correct type
+        // Based on node state
         if (!isRunning() && node.inPath)
             type = new PathSquare;
         else if (node.expanding)
@@ -38,6 +40,7 @@ void AlgorithmRunner::updateBoard()
 	else
 	    type = new NormalSquare;
 
+        // Prevent overwrighting Start and End square, then set the square type
         if (!dynamic_cast<StartSquare*>(board->getSquare(node.i, node.j)->getType()) &&
             !dynamic_cast<EndSquare*>(board->getSquare(node.i, node.j)->getType()) )
             board->setSquareType(node.i, node.j, type);
@@ -100,7 +103,8 @@ void AlgorithmRunner::setAlgorithm(std::string algorithm)
     std::vector< std::vector<int> > adjList;
     int start_ID = -1;
     int goal_ID = -1;
-    
+
+    // Generate list of nodes from board data, and fill adjacency list
     for (int i = 0; i < board->size(); i++) {
         for (int j = 0; j < board->size(); j++) {
 	    Square* square = board->getSquare(i, j);
@@ -120,13 +124,15 @@ void AlgorithmRunner::setAlgorithm(std::string algorithm)
         }
     }
 
+    // Fix for mirrored node values
     std::sort(nodes.begin(), nodes.end(), [](Node lhs, Node rhs){ 
             if (lhs.j == rhs.j)
                 return lhs.i < rhs.i;
             else
                 return lhs.j < rhs.j;
     } );
-    
+
+    // Call algorithm selected by App
     if (algorithm == std::string("A*"))
         this->algorithm = new AStar(adjList, nodes, start_ID, goal_ID);
     
@@ -152,6 +158,7 @@ bool AlgorithmRunner::isRunning()
 
 void AlgorithmRunner::next()
 {
+    // Next iteration of algorithm
     if (algorithm && board->goalsChosen()) {
         if (isRunning()) {
             algorithm->next();
