@@ -22,6 +22,8 @@ public:
     void setType(SquareType* type);
 
     void click();
+    
+    SquareType* getType();
 };
 
 #endif // Square_hpp

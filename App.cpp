@@ -1,6 +1,7 @@
 #include "App.hpp"
 #include "App.hpp"
 #include "Board.hpp"
+#include "AlgorithmRunner.hpp"
 #include <vector>
 
 App::App(const char* label, int x, int y, int w, int h)
@@ -8,11 +9,13 @@ App::App(const char* label, int x, int y, int w, int h)
     , mx(0)
     , my(0)
     , board(new Board(20))
+    , algoRunner(new AlgorithmRunner(board))
 { }
 
 App::~App()
 {
     delete board;
+    delete algoRunner;
 }
 
 void App::draw()
@@ -22,6 +25,7 @@ void App::draw()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    algoRunner->next();
     board->draw();
     
     // Display
@@ -35,6 +39,7 @@ void App::mouseDown(float x, float y)
     my = y;
 
     board->click(x, y);
+    
     // Redraw the scene
     redraw();
 }
@@ -45,19 +50,46 @@ void App::mouseDrag(float x, float y)
     mx = x;
     my = y;
 
-    board->drag(x, y);
+    if (!algoRunner->isRunning())
+        board->drag(x, y);
     // Redraw the scene
     redraw();
 }
 
 void App::keyPress(unsigned char key)
 {
-    if (key == 27){
+    std::string algo = "";
+    switch (key) {
+    case 27: // ESC
         // Exit the app when Esc key is pressed
         exit(0);
-    }
-    else if (key == ' ') {
+        break;
+
+    case ' ':
         board->reset();
+        algoRunner->reset();
         redraw();
-    }
+        break;
+
+    case '1':
+        algo = "A*";
+        break;
+
+    case '2':
+        algo = "Dijkstra";
+        break;
+
+    case '3':
+        algo = "BFS";
+        break;
+
+    case '4':
+        algo = "DFS";
+        break;
+
+    case '\n':
+        if (algo != std::string(""))
+            algoRunner->setAlgorithm(algo);
+        break;
+    }  
 }

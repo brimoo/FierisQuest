@@ -49,3 +49,8 @@ void Square::click()
     else
         setType(new WallSquare);
 }
+
+SquareType* Square::getType()
+{
+    return type;
+}

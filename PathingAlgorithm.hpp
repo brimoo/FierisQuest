@@ -8,28 +8,26 @@ class PathingAlgorithm {
    
 protected:
 
-    std::vector< std::vector<Node> > adjList;
+    std::vector< std::vector<int> > adjList;
     std::vector<Node> vecList;
-    Node startNode, endNode;
+    int startID;
+    int endID;
+    bool running;
         
 public:
 
-    PathingAlgorithm(std::vector< std::vector<Node> > adjList, std::vector<Node> vecList, Node s, Node g)
+    PathingAlgorithm(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g)
         : adjList(adjList)
-        , startNode(s)
-        , endNode(g)
         , vecList(vecList)
+        , startID(s)
+        , endID(g)
+        , running(false)
     { }
     virtual ~PathingAlgorithm(){}
-    virtual void run() = 0;
-    virtual bool isRunning() = 0;
-    std::vector<std::vector<Node>> getList(); 
+    virtual void next() = 0;
+    virtual bool isRunning() { return running; }
+    std::vector<Node> getList() { return vecList; }
 
 };
-
-std::vector<Node> PathingAlgorithm:: getList()
-{
-    return vecList;
-}
 
 #endif // PathingAlgorithm_hpp

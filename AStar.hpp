@@ -8,35 +8,25 @@ class AStar : public PathingAlgorithm {
 
 protected:
 
-    int heuristic(Node startNode, Node endNode);
-    bool finished;
+    virtual int heuristic(Node startNode, Node endNode);
 
 public:
-
-    AStar();
-
+    AStar(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g);
+    void next();
 };
 
-AStar::AStar()
-{
-
-
-
-}
+AStar::AStar(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g)
+    : PathingAlgorithm(adjList, vecList, s, g)
+{ }
 
 int AStar::heuristic(Node startNode, Node endNode)
 {
     return abs(endNode.i - startNode.i) + abs(endNode.j - startNode.j);   
 }
 
-void AStar::run()
+void AStar::next()
 {
      
-}
-
-bool AStar::isRUnning()
-{
-    return finished;
 }
 
 #endif // AStar_hpp

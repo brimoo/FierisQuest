@@ -3,6 +3,7 @@
 
 #include "GlutApp.hpp"
 #include "Board.hpp"
+#include "AlgorithmRunner.hpp"
 #include <vector>
 
 class App : public GlutApp {
@@ -11,7 +12,9 @@ class App : public GlutApp {
     float my;
 
     Board* board;
+    AlgorithmRunner* algoRunner;
 
+    bool algorithm_chosed;
 public:
     // Constructor, to initialize state
     App(const char* label, int x, int y, int w, int h);
