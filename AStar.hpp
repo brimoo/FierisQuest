@@ -32,7 +32,7 @@ class AStar : public PathingAlgorithm {
 protected:
 
     virtual int heuristic(int startNode, int endNode);
-    std::vector<int> extractPath();
+    void extractPath();
     PriorityQueue open;
     std::map<int, int> cost_so_far;
     std::map<int, int> came_from;
@@ -61,9 +61,6 @@ int AStar::heuristic(int startNode, int endNode)
 
 void AStar::next()
 {
-    
-    std::cout << "Running next step..." << std::endl;
-
 
     if(!open.empty()){
 
@@ -96,17 +93,15 @@ void AStar::next()
     }
 }
 
-std::vector<int> AStar::extractPath()
+void AStar::extractPath()
 {
     int i = goal;
     std::vector<int> path;
 
     while(i != start && pathFound){
         i = came_from[i];
-        path.push_back(i);
+        vecList[i].inPath = true;
     }
-
-    return path;
 }
 
 #endif // AStar_hpp

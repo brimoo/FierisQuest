@@ -27,7 +27,7 @@ public:
     virtual ~PathingAlgorithm(){}
     virtual void next() = 0;
     virtual bool isRunning() { return running; }
-    virtual std::vector<int> extractPath() = 0;
+    virtual void extractPath() = 0;
     std::vector<Node> getList() { return vecList; }
 
 };
