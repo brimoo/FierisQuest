@@ -13,7 +13,6 @@ class AlgorithmRunner {
     void updateBoard();
     int indexToID(int i, int j);
     std::vector<int> getNeighbors(int i, int j);
-    bool isWallSquare(int i, int j);
 public:
     AlgorithmRunner(Board* board);
     ~AlgorithmRunner();
