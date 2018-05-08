@@ -7,6 +7,7 @@ struct Node{
 
     bool traversed = false;
     bool expanding = false;
+    bool inPath = false;
 
     int cost;
 

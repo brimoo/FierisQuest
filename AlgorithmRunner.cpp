@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <climits>
+#include <algorithm>
 
 AlgorithmRunner::AlgorithmRunner(Board* board)
     : board(board)
@@ -111,13 +112,20 @@ void AlgorithmRunner::setAlgorithm(std::string algorithm)
                 goal_ID = indexToID(i, j);
             
 	    if (dynamic_cast<WallSquare*>(square->getType()))
-	        nodes.push_back( Node(indexToID(j, i), i, j, INT_MAX) );
+	        nodes.push_back( Node(indexToID(i, j), i, j, INT_MAX) );
 	    else
-		nodes.push_back( Node(indexToID(j, i), i, j, 1) );
+		nodes.push_back( Node(indexToID(i, j), i, j, 1) );
 	    
             adjList.push_back(getNeighbors(i, j));
         }
     }
+
+    std::sort(nodes.begin(), nodes.end(), [](Node lhs, Node rhs){ 
+            if (lhs.j == rhs.j)
+                return lhs.i < rhs.i;
+            else
+                return lhs.j < rhs.j;
+    } );
     
     if (algorithm == std::string("A*"))
         this->algorithm = new AStar(adjList, nodes, start_ID, goal_ID);

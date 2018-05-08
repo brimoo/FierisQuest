@@ -5,6 +5,7 @@
 #include <queue>
 #include <map>
 #include <functional>
+#include <climits>
 #include <iostream>
 
 struct PriorityQueue {
@@ -31,6 +32,7 @@ class AStar : public PathingAlgorithm {
 protected:
 
     virtual int heuristic(int startNode, int endNode);
+    void extractPath();
     PriorityQueue open;
     std::map<int, int> cost_so_far;
     std::map<int, int> came_from;
@@ -59,25 +61,22 @@ int AStar::heuristic(int startNode, int endNode)
 
 void AStar::next()
 {
-    
-    std::cout << "Running next step..." << std::endl;
-
 
     if(!open.empty()){
 
         int curr = open.pop();
         vecList[curr].traverse();
-        std::cout << "Traversed: (" << vecList[curr].i << ", " << vecList[curr].j << ") " << curr << std::endl;
 
         if(curr == goal){
             std::cout << "-----FOUND GOAL-----" << std::endl;
             running = false;
+            pathFound = true;
             return;
         }
 
         for(auto neighbor : adjList[curr]){
-            int new_cost = cost_so_far[curr] + 1;
-            if(cost_so_far.find(neighbor) == cost_so_far.end() || new_cost < cost_so_far[neighbor]){
+            int new_cost = cost_so_far[curr] + vecList[neighbor].cost;
+            if((cost_so_far.find(neighbor) == cost_so_far.end() || new_cost < cost_so_far[neighbor]) && vecList[neighbor].cost != INT_MAX){
                 cost_so_far[neighbor] = new_cost;
                 int priority = new_cost + heuristic(neighbor, goal);
                 open.push(neighbor, priority);
@@ -90,6 +89,18 @@ void AStar::next()
     }
     else{
         running = false;
+        std::cout << "-----NO PATH AVAILABLE-----" << std::endl;
+    }
+}
+
+void AStar::extractPath()
+{
+    int i = goal;
+    std::vector<int> path;
+
+    while(i != start && pathFound){
+        i = came_from[i];
+        vecList[i].inPath = true;
     }
 }
 

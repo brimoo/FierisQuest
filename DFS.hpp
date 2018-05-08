@@ -5,7 +5,7 @@ class DFS : public PathingAlgorithm {
 
 public:
     DFS(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g);
-    
+    void extractPath();
     void next();
 };
 
@@ -15,7 +15,12 @@ DFS::DFS(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int
 
 void DFS::next()
 {
+    return;
+}
 
+void DFS::extractPath()
+{
+    return;
 }
 
 #endif // DFS_hpp
