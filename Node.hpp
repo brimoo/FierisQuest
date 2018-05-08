@@ -8,11 +8,25 @@ struct Node{
     bool traversed = false;
     bool expanding = false;
 
-    Node(int ID, int i, int j)
-        : ID(ID)
-        , i(i)
+    int cost;
+
+    Node(int ID, int i, int j, int cost)
+        : i(i)
         , j(j)
+	, cost(cost)
     { }
+
+    void expand() {
+        traversed = false;
+        expanding = true;
+    }
+
+    void traverse() {
+        traversed = true;
+        expanding = false;
+    }
 };
+
+
 
 #endif

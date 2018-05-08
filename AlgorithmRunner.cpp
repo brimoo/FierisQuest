@@ -5,6 +5,8 @@
 #include "DFS.hpp"
 #include "BFS.hpp"
 #include <stdexcept>
+#include <iostream>
+#include <climits>
 
 AlgorithmRunner::AlgorithmRunner(Board* board)
     : board(board)
@@ -24,25 +26,30 @@ void AlgorithmRunner::updateBoard()
     for (auto node : vertices) {
         SquareType* type;
         
-        if (node.traversed)
-            type = new TraversedSquare;
-        else if (node.expanding)
+        if (node.expanding)
             type = new ExpandingSquare;
-        else
-            type = new NormalSquare;
+        else if (node.traversed)
+            type = new TraversedSquare;
+	else if (node.cost == INT_MAX)
+	    type = new WallSquare;
+	else
+	    type = new NormalSquare;
 
-        board->setSquareType(node.i, node.j, type);
+        if (!dynamic_cast<StartSquare*>(board->getSquare(node.i, node.j)->getType()) &&
+            !dynamic_cast<EndSquare*>(board->getSquare(node.i, node.j)->getType()) )
+            board->setSquareType(node.i, node.j, type);
     }
 }
 
 int AlgorithmRunner::indexToID(int i, int j)
 {
-    return i*board->size() + j;
+    return i + j*board->size();
 }
 
 bool AlgorithmRunner::isWallSquare(int i, int j)
 {
-    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType());
+//    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType());
+    return false;
 }
 
 std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
@@ -55,40 +62,40 @@ std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
     if (i != 0) {
         // Top left
         if (j != 0 && !isWallSquare(i-1, j-1))
-            neighbors.push_back( indexToID(i-1, j-1) );
+            neighbors.push_back( indexToID(j-1, i-1) );
 
         // Bottom left
-        if (j != board->size() && !isWallSquare(i-1, j+1))
-            neighbors.push_back( indexToID(i-1, j+1) );
+        if (j != board->size()-1 && !isWallSquare(i-1, j+1))
+            neighbors.push_back( indexToID(j+1, i-1) );
 
         // Left
         if (!isWallSquare(i-1, j))
-        neighbors.push_back( indexToID(i-1, j) );
+        neighbors.push_back( indexToID(j, i-1) );
     }
 
     // Above
     if (j != 0 && !isWallSquare(i, j-1))
-        neighbors.push_back( indexToID(i, j-1) );
+        neighbors.push_back( indexToID(j-1, i) );
 
     // Below
-    if (j != board->size() && !isWallSquare(i, j+1))
-        neighbors.push_back( indexToID(i, j+1) );
+    if (j != board->size()-1 && !isWallSquare(i, j+1))
+        neighbors.push_back( indexToID(j+1, i) );
 
     // Right Side
-    if (i != board->size() ) {
+    if (i != board->size()-1 ) {
         // Top right
         if (j != 0 && !isWallSquare(i+1, j-1))
-            neighbors.push_back( indexToID(i+1, j-1) );
+            neighbors.push_back( indexToID(j-1, i+1) );
 
         // Bottom right
-        if (j != board->size() && !isWallSquare(i+1, j+1))
-            neighbors.push_back( indexToID(i+1, j+1) );
+        if (j != board->size()-1 && !isWallSquare(i+1, j+1))
+            neighbors.push_back( indexToID(j+1, i+1) );
 
         // Right
         if (!isWallSquare(i+1, j))
-        neighbors.push_back( indexToID(i+1, j) );
+        neighbors.push_back( indexToID(j, i+1) );
     }
-    
+
     return neighbors;
 }
 
@@ -101,18 +108,19 @@ void AlgorithmRunner::setAlgorithm(std::string algorithm)
     
     for (int i = 0; i < board->size(); i++) {
         for (int j = 0; j < board->size(); j++) {
+	    Square* square = board->getSquare(i, j);
             
-            Square* square = board->getSquare(i, j);
-            if (dynamic_cast<WallSquare*>(square->getType()))
-                continue;
-            
-            else if (dynamic_cast<StartSquare*>(square->getType()))
+            if (dynamic_cast<StartSquare*>(square->getType()))
                 start_ID = indexToID(i, j);
             
             else if (dynamic_cast<EndSquare*>(square->getType()))
                 goal_ID = indexToID(i, j);
             
-            nodes.push_back( Node(indexToID(i, j), i, j) );
+	    if (dynamic_cast<WallSquare*>(square->getType()))
+	        nodes.push_back( Node(indexToID(j, i), i, j, INT_MAX) );
+	    else
+		nodes.push_back( Node(indexToID(j, i), i, j, 1) );
+	    
             adjList.push_back(getNeighbors(i, j));
         }
     }
@@ -143,8 +151,13 @@ bool AlgorithmRunner::isRunning()
 void AlgorithmRunner::next()
 {
     if (algorithm && board->goalsChosen()) {
-        algorithm->next();
-        updateBoard();
+
+        if (isRunning()) {
+            algorithm->next();
+            updateBoard();
+        }
+
+
     }
 }
 

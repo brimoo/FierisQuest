@@ -33,6 +33,11 @@ void App::draw()
     glutSwapBuffers();
 }
 
+void App::idle()
+{
+//    redraw();
+}
+
 void App::mouseDown(float x, float y)
 {
     // Update app state
@@ -87,9 +92,13 @@ void App::keyPress(unsigned char key)
         selected_algo = "DFS";
         break;
 
-    case '\n':
+    case 13:
         if (selected_algo != std::string(""))
             algoRunner->setAlgorithm(selected_algo);
+        break;
+    
+    case 'd':
+        redraw();
         break;
     }  
 }

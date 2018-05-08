@@ -21,7 +21,7 @@ public:
         , vecList(vecList)
         , startID(s)
         , endID(g)
-        , running(false)
+        , running(true)
     { }
     virtual ~PathingAlgorithm(){}
     virtual void next() = 0;
