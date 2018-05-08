@@ -13,6 +13,7 @@ protected:
     int startID;
     int endID;
     bool running;
+    bool pathFound;
         
 public:
 
@@ -26,6 +27,7 @@ public:
     virtual ~PathingAlgorithm(){}
     virtual void next() = 0;
     virtual bool isRunning() { return running; }
+    virtual std::vector<int> extractPath() = 0;
     std::vector<Node> getList() { return vecList; }
 
 };
