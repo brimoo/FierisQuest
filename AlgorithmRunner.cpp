@@ -40,9 +40,9 @@ int AlgorithmRunner::indexToID(int i, int j)
     return i*board->size() + j;
 }
 
-bool isWallSquare(int i, int j)
+bool AlgorithmRunner::isWallSquare(int i, int j)
 {
-    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType();
+    return dynamic_cast<WallSquare*>(board->getSquare(i, j)->getType());
 }
 
 std::vector<int> AlgorithmRunner::getNeighbors(int i, int j)
