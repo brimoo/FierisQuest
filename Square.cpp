@@ -82,10 +82,10 @@ void Square::displayTexture()
     glTexCoord2f(1, 1);
     glVertex2f(x-size/2, y+size/2);
 
-    glTexCoord2f(0, 1);
+    glTexCoord2f(0.2, 1);
     glVertex2f(x+size/2, y+size/2);
 
-    glTexCoord2f(0, 0);
+    glTexCoord2f(0.2, 0);
     glVertex2f(x+size/2, y-size/2);
 
     glEnd();

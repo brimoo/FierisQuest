@@ -19,7 +19,7 @@ class App : public GlutApp {
     void printIntro();
 public:
     // Constructor, to initialize state
-    App(const char* label, int x, int y, int w, int h);
+    App(const char* label, int x, int y, int w, int h, int board_size);
     ~App();
     
     // These are the events we want to handle

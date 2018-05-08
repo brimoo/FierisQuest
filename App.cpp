@@ -13,11 +13,11 @@ void animate(int value)
     glutTimerFunc(singleton->getSpeed(), animate, value);
 }
 
-App::App(const char* label, int x, int y, int w, int h)
+App::App(const char* label, int x, int y, int w, int h, int board_size)
     : GlutApp(label, x, y, w, h)
     , mx(0)
     , my(0)
-    , board(new Board(20))
+    , board(new Board(board_size))
     , algoRunner(new AlgorithmRunner(board))
     , selected_algo("")
     , paused(false)
