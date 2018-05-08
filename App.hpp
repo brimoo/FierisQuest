@@ -10,6 +10,7 @@ class App : public GlutApp {
     // Maintain app state here
     float mx;
     float my;
+    int animationSpeed = 30;
 
     Board* board;
     AlgorithmRunner* algoRunner;
@@ -26,6 +27,8 @@ public:
     void keyPress(unsigned char key);
     void mouseDown(float x, float y);
     void mouseDrag(float x, float y);
+    bool isRunning();
+    int  getSpeed();
 };
 
 #endif // App_hpp

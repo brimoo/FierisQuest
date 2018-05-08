@@ -4,6 +4,17 @@
 #include "AlgorithmRunner.hpp"
 #include <vector>
 
+static App* singleton;
+
+void animate(int value)
+{
+    if(!singleton->isRunning())
+        return;
+
+    singleton->redraw();
+    glutTimerFunc(singleton->getSpeed(), animate, value);
+}
+
 App::App(const char* label, int x, int y, int w, int h)
     : GlutApp(label, x, y, w, h)
     , mx(0)
@@ -11,7 +22,9 @@ App::App(const char* label, int x, int y, int w, int h)
     , board(new Board(20))
     , algoRunner(new AlgorithmRunner(board))
     , selected_algo("")
-{ }
+{ 
+    singleton = this;
+}
 
 App::~App()
 {
@@ -93,12 +106,30 @@ void App::keyPress(unsigned char key)
         break;
 
     case 13:
-        if (selected_algo != std::string(""))
+        if (selected_algo != std::string("")){
             algoRunner->setAlgorithm(selected_algo);
+            animate(0);
+        }
         break;
     
-    case 'd':
-        redraw();
+    case '-':
+        if(animationSpeed < 100)
+            animationSpeed += 5;
+        break;
+
+    case '=':
+        if(animationSpeed > 0)
+            animationSpeed -= 5;
         break;
     }  
+}
+
+bool App::isRunning()
+{
+    return algoRunner->isRunning();
+}
+
+int App::getSpeed()
+{
+    return animationSpeed;
 }
