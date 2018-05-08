@@ -27,6 +27,9 @@ void AlgorithmRunner::updateBoard()
     for (auto node : vertices) {
         SquareType* type;
 
+        if (node.inPath)
+            std::cout << "Path node" << std::endl;
+        
         if (!isRunning() && node.inPath)
             type = new PathSquare;
         else if (node.expanding)
