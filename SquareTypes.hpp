@@ -45,16 +45,16 @@ struct WallSquare : public SquareType {
 };
 
 struct StartSquare : public SquareType {
-    // Purple (Invalid)
-    std::vector<float> color() { return {1, 0, 1}; }
+    // White
+    std::vector<float> color() { return {1, 1, 1}; }
 
     // Guy Fieri's Face
     std::string texture() { return "bitmaps/fieri.bmp"; }
 };
 
 struct EndSquare : public SquareType {
-    // Purple (Invalid)
-    std::vector<float> color() { return {1, 0, 1}; }
+    // White
+    std::vector<float> color() { return {1, 1, 1}; }
 
     // Burger
     std::string texture() { return "bitmaps/burger.bmp"; }
