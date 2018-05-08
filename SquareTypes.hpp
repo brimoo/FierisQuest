@@ -1,6 +1,9 @@
 #ifndef SquareTypes_hpp
 #define SquareTypes_hpp
 
+#include <vector>
+#include <string>
+
 #if defined WIN32
 #include <freeglut.h>
 #elif defined __APPLE__
@@ -9,11 +12,12 @@
 #include <GL/freeglut.h>
 #endif
 
-#include <vector>
-
 struct SquareType {
+    GLuint texID;
+    
     virtual ~SquareType() {}
     
+    virtual std::string texture() { return ""; };
     virtual bool isTraverseable() { return true; }
     // {r, g, b}
     virtual std::vector<float> color() = 0;
@@ -41,18 +45,24 @@ struct WallSquare : public SquareType {
 };
 
 struct StartSquare : public SquareType {
-    // Green
-    std::vector<float> color() { return {0, 1, 0}; }
+    // Purple (Invalid)
+    std::vector<float> color() { return {1, 0, 1}; }
+
+    // Guy Fieri's Face
+    std::string texture() { return "bitmaps/fieri.bmp"; }
 };
 
 struct EndSquare : public SquareType {
-    // Yellow
-    std::vector<float> color() { return {1, 1, 0}; }
+    // Purple (Invalid)
+    std::vector<float> color() { return {1, 0, 1}; }
+
+    // Burger
+    std::string texture() { return "bitmaps/burger.bmp"; }
 };
 
 struct PathSquare : public SquareType {
-    // Purple
-    std::vector<float> color() { return {1, 0, 1}; }
+    // Green
+    std::vector<float> color() { return {0, 1, 0}; }
 };
 
 #endif // SquareTypes_hpp

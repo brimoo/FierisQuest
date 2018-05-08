@@ -15,9 +15,9 @@ CC       = g++
 CFLAGS   = -Wall -Werror --std=c++11 $(OPTFLAGS)
 
 ifeq ($(strip $(OS)),Darwin)
-	LDFLAGS = -framework GLUT -framework OpenGL
+	LDFLAGS = -framework GLUT -framework OpenGL -framework GLU
 else
-	LDFLAGS = -lGL -lglut
+	LDFLAGS = -lGL -lglut -lGLU
 endif
 
 #######################################################################

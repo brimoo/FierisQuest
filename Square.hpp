@@ -27,6 +27,7 @@ public:
     
     SquareType* getType();
 
+    void displayTexture();
 };
 
 #endif // Square_hpp

@@ -1,13 +1,5 @@
 #include "Square.hpp"
-
-#include <iostream>
-#if defined WIN32
-#include <freeglut.h>
-#elif defined __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/freeglut.h>
-#endif
+#include "RgbImage.hpp"
 
 Square::Square(float x, float y, float size)
     : x(x)
@@ -29,14 +21,16 @@ bool Square::contains(float x, float y)
 }
 
 void Square::draw()
-{
+{   
     std::vector<float> color = type->color();
     glColor3f(color[0], color[1], color[2]);
     glRectf(x-size/2, y+size/2,
             x+size/2, y-size/2);
+    
+    if (type->texture() != std::string(""))
+        displayTexture();
 }
 
-class SquareType;
 void Square::setType(SquareType* type)
 {
     this->type = type;
@@ -59,4 +53,31 @@ void Square::drag()
 SquareType* Square::getType()
 {
     return type;
+}
+
+void Square::displayTexture()
+{        
+    glEnable(GL_TEXTURE_2D);
+    
+    RgbImage textureMap( type->texture().c_str() );
+    
+    glGenTextures(1, &type->texID);
+    glBindTexture(GL_TEXTURE_2D, type->texID);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 1, 1, GL_RGB,
+                      GL_UNSIGNED_BYTE, textureMap.ImageData() );
+    
+    glBegin(GL_QUADS);
+    float top = y+size/2;
+    float bottom = -top;
+    float right = x+size/2;
+    float left = -right;
+    
+    glTexCoord2f(left, bottom);
+    glTexCoord2f(left, top);
+    glTexCoord2f(right, top);
+    glTexCoord2f(right, bottom);
+    glEnd();
+    
+    glDisable(GL_TEXTURE_2D);
 }
