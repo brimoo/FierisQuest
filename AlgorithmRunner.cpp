@@ -137,7 +137,7 @@ void AlgorithmRunner::setAlgorithm(std::string algorithm)
         this->algorithm = new DFS(adjList, nodes, start_ID, goal_ID);
 
     else if (algorithm ==  std::string("BFS"))
-        this->algorithm = new DFS(adjList, nodes, start_ID, goal_ID);
+        this->algorithm = new BFS(adjList, nodes, start_ID, goal_ID);
 
     else
         throw std::invalid_argument("Undefined Algorithm");    
