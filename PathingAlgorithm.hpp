@@ -5,21 +5,17 @@
 #include "Node.hpp"
 
 class PathingAlgorithm {
-   
 protected:
-
     std::vector< std::vector<int> > adjList;
-    std::vector<Node> vecList;
+    std::vector<Node> nodeList;
     int startID;
     int endID;
     bool running;
     bool pathFound;
-        
 public:
-
-    PathingAlgorithm(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g)
+    PathingAlgorithm(std::vector< std::vector<int> > adjList, std::vector<Node> nodeList, int s, int g)
         : adjList(adjList)
-        , vecList(vecList)
+        , nodeList(nodeList)
         , startID(s)
         , endID(g)
         , running(true)
@@ -28,8 +24,7 @@ public:
     virtual void next() = 0;
     virtual bool isRunning() { return running; }
     virtual void extractPath() = 0;
-    std::vector<Node> getList() { return vecList; }
-
+    std::vector<Node> getList() { return nodeList; }
 };
 
 #endif // PathingAlgorithm_hpp

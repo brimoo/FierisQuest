@@ -7,11 +7,11 @@ class Dijkstra : public AStar {
     int heuristic(int startNode, int endNode);
 
 public:
-    Dijkstra(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g);
+    Dijkstra(std::vector< std::vector<int> > adjList, std::vector<Node> nodeList, int s, int g);
 };
 
-Dijkstra::Dijkstra(std::vector< std::vector<int> > adjList, std::vector<Node> vecList, int s, int g)
-    : AStar(adjList, vecList, s, g)
+Dijkstra::Dijkstra(std::vector< std::vector<int> > adjList, std::vector<Node> nodeList, int s, int g)
+    : AStar(adjList, nodeList, s, g)
 { }
 
 int Dijkstra::heuristic(int startNode, int endNode)
