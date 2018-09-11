@@ -35,10 +35,10 @@ void AlgorithmRunner::updateBoard()
             type = new ExpandingSquare;
         else if (node.traversed)
             type = new TraversedSquare;
-	else if (node.cost == INT_MAX)
-	    type = new WallSquare;
-	else
-	    type = new NormalSquare;
+	    else if (node.cost == INT_MAX)
+	        type = new WallSquare;
+	    else
+	        type = new NormalSquare;
 
         // Prevent overwrighting Start and End square, then set the square type
         if (!dynamic_cast<StartSquare*>(board->getSquare(node.i, node.j)->getType()) &&
